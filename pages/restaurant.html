@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restaurant — Hôtel Lumière</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    body { padding-top: 80px; }
+    .restaurant-intro { display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; }
+    .resto-visual {
+      background: linear-gradient(135deg, #1a0f08, #0d0a06);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10rem;
+    }
+    .resto-visual::before {
+      content: 'SAVEUR';
+      position: absolute; font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem; font-weight: 300; letter-spacing: 0.3em;
+      color: rgba(201,168,76,0.05); white-space: nowrap;
+      transform: rotate(-30deg);
+    }
+    .resto-text { padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; background: var(--charbon); }
+    .menu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 3rem; }
+    .menu-card { border: 1px solid rgba(201,168,76,0.12); padding: 2rem; transition: var(--transition); }
+    .menu-card:hover { border-color: var(--gold); background: rgba(201,168,76,0.04); }
+    .menu-price { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); margin: 1rem 0 0.5rem; }
+    .menu-includes { font-size: 0.78rem; color: var(--gris-clair); }
+    .menu-items { margin-top: 1.5rem; }
+    .menu-item { padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .menu-item-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; }
+    .menu-item-desc { font-size: 0.78rem; color: var(--gris-clair); margin-top: 0.2rem; font-style: italic; }
+    .chefs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 3rem; }
+    .chef-card { text-align: center; }
+    .chef-avatar { width: 100px; height: 100px; border-radius: 50%; background: var(--gris-moyen); border: 2px solid rgba(201,168,76,0.3); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+    .chef-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; }
+    .chef-role { font-size: 0.78rem; color: var(--gold); margin: 0.3rem 0; letter-spacing: 0.1em; text-transform: uppercase; }
+    .chef-bio { font-size: 0.82rem; color: var(--gris-clair); line-height: 1.7; }
+    .reservation-strip { background: var(--gris-fonce); border-top: 1px solid rgba(201,168,76,0.15); border-bottom: 1px solid rgba(201,168,76,0.15); padding: 3rem 4rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    @media (max-width: 900px) {
+      .restaurant-intro { grid-template-columns: 1fr; }
+      .menu-grid, .chefs-grid { grid-template-columns: 1fr; }
+      .resto-text { padding: 3rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar scrolled">
+  <a href="../index.html" class="nav-logo">Hôtel <span>Lumière</span></a>
+  <div class="nav-links">
+    <a href="../index.html">Accueil</a>
+    <a href="chambres.html">Chambres</a>
+    <a href="services.html">Services</a>
+    <a href="restaurant.html" class="active">Restaurant</a>
+    <a href="galerie.html">Galerie</a>
+    <a href="apropos.html">À Propos</a>
+    <a href="contact.html">Contact</a>
+    <a href="reservation.html" class="nav-cta">Réserver</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-img" style="background:linear-gradient(135deg,#1a0f00,#0a0a0a);"></div>
+  <div class="page-hero-content animate-up">
+    <div class="page-hero-label">⭐ Étoile Michelin</div>
+    <h1>Restaurant<br>Le Lumière</h1>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="restaurant-intro">
+  <div class="resto-visual">🍽️</div>
+  <div class="resto-text">
+    <div class="tag" style="margin-bottom:1rem;">Gastronomie Française</div>
+    <h2 class="section-title">Une Étoile<br>dans la Nuit Parisienne</h2>
+    <div class="divider"></div>
+    <p style="color:var(--gris-clair);line-height:1.9;margin-bottom:1.5rem;">Le Restaurant Le Lumière est une ode à la gastronomie française contemporaine. Sous la direction du Chef Étienne Moreau, étoilé Michelin depuis 2018, chaque assiette est une œuvre d'art culinaire qui célèbre les meilleurs produits du terroir français.</p>
+    <p style="color:var(--gris-clair);line-height:1.9;margin-bottom:2rem;">Ouvert du mardi au dimanche, midi et soir, le restaurant accueille jusqu'à 60 convives dans un cadre Art Déco somptueux dominant les toits de Paris.</p>
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;">
+      <div><div style="color:var(--gold);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;">Déjeuner</div><div style="font-size:0.9rem;">12h30 — 14h00</div></div>
+      <div><div style="color:var(--gold);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;">Dîner</div><div style="font-size:0.9rem;">19h30 — 22h00</div></div>
+      <div><div style="color:var(--gold);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;">Fermé</div><div style="font-size:0.9rem;">Lundi</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MENUS -->
+<section class="section" style="background:var(--charbon);">
+  <div style="text-align:center;max-width:600px;margin:0 auto;">
+    <div class="section-label">Expérience Culinaire</div>
+    <h2 class="section-title">Nos Menus</h2>
+    <div class="divider" style="margin:1.5rem auto;"></div>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="tag">Déjeuner</div>
+      <div class="menu-price">€85</div>
+      <div class="menu-includes">3 plats · Accord mets & vins en option</div>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-name">Velouté de Butternut</div><div class="menu-item-desc">Crème de noisette, huile de truffe</div></div>
+        <div class="menu-item"><div class="menu-item-name">Sole Meunière</div><div class="menu-item-desc">Beurre clarifié, câpres, citron confit</div></div>
+        <div class="menu-item"><div class="menu-item-name">Île Flottante</div><div class="menu-item-desc">Crème anglaise à la vanille Bourbon</div></div>
+      </div>
+    </div>
+    <div class="menu-card" style="border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.03);">
+      <div class="tag" style="border-color:var(--gold);color:var(--gold);">Menu Dégustation</div>
+      <div class="menu-price">€185</div>
+      <div class="menu-includes">7 plats · Accords vins inclus</div>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-name">Amuse-bouches</div><div class="menu-item-desc">Créations du Chef</div></div>
+        <div class="menu-item"><div class="menu-item-name">Foie Gras Poêlé</div><div class="menu-item-desc">Figues caramélisées, brioche maison</div></div>
+        <div class="menu-item"><div class="menu-item-name">Homard Bleu</div><div class="menu-item-desc">Bisque légère, caviar Osciètre</div></div>
+        <div class="menu-item"><div class="menu-item-name">Filet de Bœuf Wagyu</div><div class="menu-item-desc">Jus de truffe noire, gratin dauphinois</div></div>
+        <div class="menu-item"><div class="menu-item-name">Chariot de Fromages</div><div class="menu-item-desc">Sélection d'affineurs renommés</div></div>
+        <div class="menu-item"><div class="menu-item-name">Pré-dessert & Dessert</div><div class="menu-item-desc">Création pâtissière du Chef</div></div>
+        <div class="menu-item"><div class="menu-item-name">Mignardises</div><div class="menu-item-desc">Chocolats & confiseries maison</div></div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="tag">Végétarien</div>
+      <div class="menu-price">€120</div>
+      <div class="menu-includes">5 plats · Menu végétal de saison</div>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-name">Tartare de Légumes</div><div class="menu-item-desc">Condiments, vinaigrette d'herbes</div></div>
+        <div class="menu-item"><div class="menu-item-name">Risotto aux Cèpes</div><div class="menu-item-desc">Parmesan AOP, truffe d'été</div></div>
+        <div class="menu-item"><div class="menu-item-name">Côte de Céleri Rôtie</div><div class="menu-item-desc">Jus de plantes, émulsion végétale</div></div>
+        <div class="menu-item"><div class="menu-item-name">Sorbets & Glaces</div><div class="menu-item-desc">Fruits de saison, tuile dentelle</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHEFS -->
+<section class="section">
+  <div style="text-align:center;max-width:600px;margin:0 auto;">
+    <div class="section-label">Notre Brigade</div>
+    <h2 class="section-title">Les Artisans<br>du Goût</h2>
+    <div class="divider" style="margin:1.5rem auto;"></div>
+  </div>
+  <div class="chefs-grid">
+    <div class="chef-card">
+      <div class="chef-avatar">👨‍🍳</div>
+      <div class="chef-name">Étienne Moreau</div>
+      <div class="chef-role">Chef Exécutif ⭐ Michelin</div>
+      <p class="chef-bio">Formé chez Robuchon et Bocuse, Étienne Moreau apporte sa vision de la cuisine française moderne depuis 2015.</p>
+    </div>
+    <div class="chef-card">
+      <div class="chef-avatar">👩‍🍳</div>
+      <div class="chef-name">Sophie Durand</div>
+      <div class="chef-role">Chef Pâtissière</div>
+      <p class="chef-bio">Championne de France de pâtisserie 2019, Sophie crée des desserts aussi beaux que savoureux.</p>
+    </div>
+    <div class="chef-card">
+      <div class="chef-avatar">🍷</div>
+      <div class="chef-name">Alexandre Petit</div>
+      <div class="chef-role">Sommelier en Chef</div>
+      <p class="chef-bio">Notre cave de 12 000 bouteilles est la fierté d'Alexandre, élu meilleur sommelier de Paris 2021.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATION STRIP -->
+<div class="reservation-strip">
+  <div>
+    <div class="section-label">Réservation Table</div>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;">Réservez Votre Table</h3>
+    <p style="color:var(--gris-clair);font-size:0.9rem;">Réservation fortement conseillée. Tenue correcte exigée.</p>
+  </div>
+  <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;">
+    <div>
+      <div style="font-size:0.7rem;color:var(--gold);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.3rem;">Téléphone</div>
+      <div style="font-size:1.1rem;">+33 1 42 00 00 01</div>
+    </div>
+    <a href="contact.html" class="btn btn-outline">Réserver en ligne →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><h2>Hôtel Lumière</h2><p>15, Avenue des Lumières<br>75008 Paris, France</p></div>
+    <div class="footer-col"><h4>L'Hôtel</h4><ul><li><a href="../index.html">Accueil</a></li><li><a href="chambres.html">Chambres</a></li><li><a href="services.html">Services</a></li><li><a href="restaurant.html">Restaurant</a></li></ul></div>
+    <div class="footer-col"><h4>Réservation</h4><ul><li><a href="reservation.html">Réserver</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Légal</h4><ul><li><a href="#">Mentions Légales</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2024 Hôtel Lumière</span><span>Paris, France</span></div>
+</footer>
+</body>
+</html>

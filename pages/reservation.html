@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Réservation — Hôtel Lumière</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    body { padding-top: 80px; background: var(--noir); }
+    .reservation-layout {
+      display: grid; grid-template-columns: 1fr 380px;
+      gap: 3rem; max-width: 1200px; margin: 0 auto;
+      padding: 4rem;
+    }
+    /* Steps indicator */
+    .booking-steps {
+      display: flex; gap: 0; margin-bottom: 3rem;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+    .booking-step {
+      flex: 1; padding: 1rem 1.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+      border-right: 1px solid rgba(201,168,76,0.15);
+      font-size: 0.8rem; color: var(--gris-clair);
+      background: var(--gris-fonce); transition: var(--transition);
+    }
+    .booking-step:last-child { border-right: none; }
+    .booking-step.active { background: rgba(201,168,76,0.08); color: var(--gold); }
+    .booking-step.done { color: var(--blanc); }
+    .step-circle {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 500;
+    }
+    .booking-step.active .step-circle { background: var(--gold); color: var(--noir); border-color: var(--gold); }
+    .booking-step.done .step-circle { background: var(--gris-moyen); border-color: var(--gris-clair); }
+
+    /* Form sections */
+    .form-section {
+      background: var(--gris-fonce);
+      border: 1px solid rgba(201,168,76,0.1);
+      padding: 2.5rem; margin-bottom: 2rem;
+    }
+    .form-section h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 400;
+      margin-bottom: 0.3rem; color: var(--or, var(--gold));
+    }
+    .form-section-sub { font-size: 0.82rem; color: var(--gris-clair); margin-bottom: 2rem; }
+
+    /* Summary sidebar */
+    .booking-summary {
+      background: var(--gris-fonce);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 2rem; position: sticky; top: 100px;
+      height: fit-content;
+    }
+    .summary-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 400;
+      color: var(--gold); margin-bottom: 1.5rem;
+      padding-bottom: 1rem; border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .summary-room {
+      background: var(--gris-moyen); padding: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .summary-room h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; }
+    .summary-room p { font-size: 0.78rem; color: var(--gris-clair); margin-top: 0.3rem; }
+    .summary-dates { display: flex; justify-content: space-between; margin-bottom: 1.5rem; }
+    .summary-date { text-align: center; }
+    .summary-date .label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gris-clair); }
+    .summary-date .value { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--blanc); }
+    .summary-arrow { display: flex; align-items: center; color: var(--gold); }
+    .price-breakdown { border-top: 1px solid rgba(201,168,76,0.15); padding-top: 1.5rem; }
+    .price-line { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.6rem; }
+    .price-line .label { color: var(--gris-clair); }
+    .price-total {
+      display: flex; justify-content: space-between;
+      padding-top: 1rem; margin-top: 0.5rem;
+      border-top: 1px solid rgba(201,168,76,0.3);
+      font-size: 1rem; font-weight: 500;
+    }
+    .price-total .amount { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; }
+
+    /* Room selector */
+    .room-selector { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .room-option {
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 1.2rem; cursor: pointer; transition: var(--transition);
+      position: relative;
+    }
+    .room-option:hover, .room-option.selected { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+    .room-option.selected::before {
+      content: '✓'; position: absolute; top: 0.5rem; right: 0.8rem;
+      color: var(--gold); font-size: 0.9rem;
+    }
+    .room-option h5 { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; margin-bottom: 0.2rem; }
+    .room-option .room-price-sm { font-size: 0.9rem; color: var(--gold); }
+    .room-option p { font-size: 0.75rem; color: var(--gris-clair); margin-top: 0.2rem; }
+
+    /* Options extras */
+    .extras-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .extra-option {
+      border: 1px solid rgba(201,168,76,0.12);
+      padding: 1rem; cursor: pointer; transition: var(--transition);
+      display: flex; gap: 0.8rem; align-items: flex-start;
+    }
+    .extra-option:hover { border-color: rgba(201,168,76,0.4); }
+    .extra-option input[type="checkbox"] { accent-color: var(--gold); margin-top: 2px; flex-shrink: 0; }
+    .extra-option-info h5 { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.2rem; }
+    .extra-option-info p { font-size: 0.75rem; color: var(--gris-clair); }
+    .extra-option-info .extra-price { font-size: 0.78rem; color: var(--gold); margin-top: 0.3rem; }
+
+    @media (max-width: 900px) {
+      .reservation-layout { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+      .booking-summary { position: static; }
+      .booking-steps { flex-direction: column; }
+      .booking-step { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.15); }
+      .room-selector, .extras-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar scrolled">
+  <a href="../index.html" class="nav-logo">Hôtel <span>Lumière</span></a>
+  <div class="nav-links">
+    <a href="../index.html">Accueil</a>
+    <a href="chambres.html">Chambres</a>
+    <a href="services.html">Services</a>
+    <a href="restaurant.html">Restaurant</a>
+    <a href="galerie.html">Galerie</a>
+    <a href="apropos.html">À Propos</a>
+    <a href="contact.html">Contact</a>
+    <a href="reservation.html" class="nav-cta active">Réserver</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero" style="height:40vh;">
+  <div class="page-hero-img" style="background:linear-gradient(135deg,#0a1208,#0a0a0a);"></div>
+  <div class="page-hero-content animate-up">
+    <div class="page-hero-label">Disponibilités en temps réel</div>
+    <h1>Réservez<br>Votre Séjour</h1>
+  </div>
+</div>
+
+<div class="reservation-layout">
+  <!-- FORM -->
+  <div>
+    <!-- Steps -->
+    <div class="booking-steps">
+      <div class="booking-step active">
+        <div class="step-circle">1</div>
+        <div><strong>Dates & Chambre</strong></div>
+      </div>
+      <div class="booking-step">
+        <div class="step-circle">2</div>
+        <div>Vos Informations</div>
+      </div>
+      <div class="booking-step">
+        <div class="step-circle">3</div>
+        <div>Paiement</div>
+      </div>
+      <div class="booking-step">
+        <div class="step-circle">4</div>
+        <div>Confirmation</div>
+      </div>
+    </div>
+
+    <!-- Dates -->
+    <div class="form-section">
+      <h3>Sélectionnez vos dates</h3>
+      <p class="form-section-sub">Choisissez vos dates d'arrivée et de départ pour vérifier les disponibilités.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Date d'arrivée</label>
+          <input type="date" id="checkin" onchange="updateSummary()"/>
+        </div>
+        <div class="form-group">
+          <label>Date de départ</label>
+          <input type="date" id="checkout" onchange="updateSummary()"/>
+        </div>
+        <div class="form-group">
+          <label>Adultes</label>
+          <select id="adults" onchange="updateSummary()">
+            <option value="1">1 adulte</option>
+            <option value="2" selected>2 adultes</option>
+            <option value="3">3 adultes</option>
+            <option value="4">4 adultes</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Enfants</label>
+          <select>
+            <option>0 enfant</option>
+            <option>1 enfant</option>
+            <option>2 enfants</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chambre -->
+    <div class="form-section">
+      <h3>Choisissez votre chambre</h3>
+      <p class="form-section-sub">Toutes nos chambres sont équipées du WiFi haut débit, climatisation et room service 24h/24.</p>
+      <div class="room-selector">
+        <div class="room-option selected" onclick="selectRoom(this, 280)">
+          <h5>Chambre Classique</h5>
+          <div class="room-price-sm">€280 / nuit</div>
+          <p>28 m² · Vue cour · King</p>
+        </div>
+        <div class="room-option" onclick="selectRoom(this, 420)">
+          <h5>Chambre Supérieure</h5>
+          <div class="room-price-sm">€420 / nuit</div>
+          <p>38 m² · Vue Paris · King</p>
+        </div>
+        <div class="room-option" onclick="selectRoom(this, 380)">
+          <h5>Chambre Twin</h5>
+          <div class="room-price-sm">€380 / nuit</div>
+          <p>36 m² · Vue avenue · 2 doubles</p>
+        </div>
+        <div class="room-option" onclick="selectRoom(this, 850)">
+          <h5>Suite Lumière</h5>
+          <div class="room-price-sm">€850 / nuit</div>
+          <p>65 m² · Terrasse · Jacuzzi</p>
+        </div>
+        <div class="room-option" onclick="selectRoom(this, 1200)">
+          <h5>Suite Haussmann</h5>
+          <div class="room-price-sm">€1 200 / nuit</div>
+          <p>80 m² · 2 salles de bain · Butler</p>
+        </div>
+        <div class="room-option" onclick="selectRoom(this, 3500)">
+          <h5>Suite Présidentielle</h5>
+          <div class="room-price-sm">€3 500 / nuit</div>
+          <p>200 m² · 2 chambres · Butler 24h</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extras -->
+    <div class="form-section">
+      <h3>Prestations supplémentaires</h3>
+      <p class="form-section-sub">Personnalisez votre séjour avec nos services exclusifs.</p>
+      <div class="extras-grid">
+        <label class="extra-option">
+          <input type="checkbox" onchange="updateSummary()"/>
+          <div class="extra-option-info">
+            <h5>🥂 Bouteille de Champagne</h5>
+            <p>Dom Pérignon millésimé à l'arrivée</p>
+            <div class="extra-price">+€95</div>
+          </div>
+        </label>
+        <label class="extra-option">
+          <input type="checkbox" onchange="updateSummary()"/>
+          <div class="extra-option-info">
+            <h5>🌹 Décoration Romantique</h5>
+            <p>Pétales de roses, bougies, chocolats</p>
+            <div class="extra-price">+€120</div>
+          </div>
+        </label>
+        <label class="extra-option">
+          <input type="checkbox" onchange="updateSummary()"/>
+          <div class="extra-option-info">
+            <h5>🚗 Transfert Aéroport</h5>
+            <p>Limousine privée aller-retour</p>
+            <div class="extra-price">+€180</div>
+          </div>
+        </label>
+        <label class="extra-option">
+          <input type="checkbox" onchange="updateSummary()"/>
+          <div class="extra-option-info">
+            <h5>💆 Massage Duo</h5>
+            <p>Massage relaxant 90 min au spa</p>
+            <div class="extra-price">+€240</div>
+          </div>
+        </label>
+        <label class="extra-option">
+          <input type="checkbox" onchange="updateSummary()"/>
+          <div class="extra-option-info">
+            <h5>🍳 Petit-déjeuner Inclus</h5>
+            <p>Buffet gastronomique chaque matin</p>
+            <div class="extra-price">+€45 / pers.</div>
+          </div>
+        </label>
+        <label class="extra-option">
+          <input type="checkbox" onchange="updateSummary()"/>
+          <div class="extra-option-info">
+            <h5>🎟️ City Tour Privé</h5>
+            <p>Visite guidée Paris en limousine 3h</p>
+            <div class="extra-price">+€350</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Infos personnelles -->
+    <div class="form-section">
+      <h3>Vos Informations</h3>
+      <p class="form-section-sub">Toutes vos données sont protégées et sécurisées.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom</label>
+          <input type="text" placeholder="Jean"/>
+        </div>
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" placeholder="Dupont"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="jean.dupont@email.fr"/>
+        </div>
+        <div class="form-group">
+          <label>Téléphone</label>
+          <input type="tel" placeholder="+33 6 00 00 00 00"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Demandes Spéciales</label>
+        <textarea rows="3" placeholder="Allergies, préférences, occasions spéciales..."></textarea>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:1rem;justify-content:flex-end;">
+      <a href="chambres.html" class="btn btn-dark">← Retour</a>
+      <a href="paiement.html" class="btn btn-gold">Continuer vers le paiement →</a>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div>
+    <div class="booking-summary">
+      <div class="summary-title">Récapitulatif</div>
+      <div class="summary-room">
+        <h4 id="summary-room-name">Chambre Classique</h4>
+        <p>28 m² · Vue cour · 2 personnes</p>
+      </div>
+      <div class="summary-dates">
+        <div class="summary-date">
+          <div class="label">Arrivée</div>
+          <div class="value" id="summary-checkin">—</div>
+        </div>
+        <div class="summary-arrow">→</div>
+        <div class="summary-date">
+          <div class="label">Départ</div>
+          <div class="value" id="summary-checkout">—</div>
+        </div>
+      </div>
+      <div class="price-breakdown">
+        <div class="price-line">
+          <span class="label" id="nights-label">— nuit(s)</span>
+          <span id="base-price">—</span>
+        </div>
+        <div class="price-line">
+          <span class="label">Taxes & frais (15%)</span>
+          <span id="tax-price">—</span>
+        </div>
+        <div class="price-total">
+          <span>Total</span>
+          <span class="amount" id="total-price">—</span>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;font-size:0.75rem;color:var(--gris-clair);line-height:1.7;">
+        ✓ Annulation gratuite jusqu'à 48h avant<br>
+        ✓ Meilleur prix garanti<br>
+        ✓ Confirmation immédiate par email
+      </div>
+      <a href="paiement.html" class="btn btn-gold" style="width:100%;justify-content:center;margin-top:1.5rem;">Réserver →</a>
+      <div style="text-align:center;margin-top:1rem;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/50px-Mastercard-logo.svg.png" style="height:20px;display:inline;margin:0 4px;filter:grayscale(1);" alt="Mastercard"/>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/60px-Visa_Inc._logo.svg.png" style="height:20px;display:inline;margin:0 4px;filter:grayscale(1);" alt="Visa"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let roomPrice = 280;
+  let nights = 0;
+
+  function selectRoom(el, price) {
+    document.querySelectorAll('.room-option').forEach(r => r.classList.remove('selected'));
+    el.classList.add('selected');
+    roomPrice = price;
+    document.getElementById('summary-room-name').textContent = el.querySelector('h5').textContent;
+    updateSummary();
+  }
+
+  function updateSummary() {
+    const cin = document.getElementById('checkin').value;
+    const cout = document.getElementById('checkout').value;
+    if (cin && cout) {
+      const d1 = new Date(cin), d2 = new Date(cout);
+      nights = Math.max(0, Math.round((d2 - d1) / 86400000));
+      const fmt = d => new Date(d).toLocaleDateString('fr-FR', {day:'2-digit', month:'short'});
+      document.getElementById('summary-checkin').textContent = fmt(cin);
+      document.getElementById('summary-checkout').textContent = fmt(cout);
+    }
+    const base = roomPrice * (nights || 1);
+    const tax = Math.round(base * 0.15);
+    const total = base + tax;
+    document.getElementById('nights-label').textContent = `${nights || 1} nuit(s) × €${roomPrice}`;
+    document.getElementById('base-price').textContent = `€${base.toLocaleString('fr-FR')}`;
+    document.getElementById('tax-price').textContent = `€${tax.toLocaleString('fr-FR')}`;
+    document.getElementById('total-price').textContent = `€${total.toLocaleString('fr-FR')}`;
+  }
+
+  // Default dates
+  const today = new Date();
+  const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
+  const dayAfter = new Date(today); dayAfter.setDate(today.getDate() + 3);
+  document.getElementById('checkin').value = tomorrow.toISOString().split('T')[0];
+  document.getElementById('checkout').value = dayAfter.toISOString().split('T')[0];
+  updateSummary();
+</script>
+</body>
+</html>

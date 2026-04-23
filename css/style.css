@@ -1,0 +1,771 @@
+/* ============================================
+   HÔTEL KIASSY — Feuille de style principale
+   Écrit en français, simplifié pour débutant
+   ============================================ */
+
+/* Importation des polices Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400;500&display=swap');
+
+/* ── Variables de couleurs (réutilisables partout) ── */
+:root {
+  --couleur-or:       #C9A84C; /* Couleur principale dorée */
+  --couleur-or-clair: #E8C97A; /* Or plus clair (survol) */
+  --couleur-or-fonce: #9A7A2E; /* Or plus foncé */
+  --couleur-noir:     #0A0A0A; /* Fond très noir */
+  --couleur-gris:     #141414; /* Gris très foncé */
+  --couleur-gris2:    #1E1E1E; /* Gris un peu plus clair */
+  --couleur-gris3:    #2A2A2A; /* Gris moyen */
+  --couleur-texte:    #888;    /* Texte secondaire gris */
+  --couleur-blanc:    #F5F0E8; /* Blanc cassé */
+  --transition:       0.35s ease; /* Durée des animations */
+}
+
+/* ── Réinitialisation de base ── */
+*, *::before, *::after {
+  box-sizing: border-box; /* La largeur inclut la bordure */
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth; /* Défilement fluide */
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--couleur-noir);
+  color: var(--couleur-blanc);
+  line-height: 1.7;
+  overflow-x: hidden; /* Pas de défilement horizontal */
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+ul { list-style: none; }
+
+/* ── Barre de défilement personnalisée ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--couleur-gris); }
+::-webkit-scrollbar-thumb { background: var(--couleur-or); border-radius: 3px; }
+
+
+/* ============================================
+   BARRE DE NAVIGATION (en haut de page)
+   ============================================ */
+
+.barre-nav {
+  position: fixed; /* Reste en haut même quand on défile */
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 4rem;
+  background: rgba(10, 10, 10, 0.95);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+  backdrop-filter: blur(10px); /* Flou de l'arrière-plan */
+  transition: var(--transition);
+}
+
+/* La barre devient plus compacte quand on descend la page */
+.barre-nav.defilé {
+  padding: 0.9rem 4rem;
+  background: rgba(10, 10, 10, 0.97);
+}
+
+/* Logo de l'hôtel */
+.logo-hotel {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  color: var(--couleur-or);
+}
+.logo-hotel span { color: var(--couleur-blanc); }
+
+/* Liens de navigation */
+.liens-nav {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.liens-nav a {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.75);
+  transition: var(--transition);
+  position: relative;
+}
+
+/* Trait doré sous le lien au survol */
+.liens-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--couleur-or);
+  transition: var(--transition);
+}
+.liens-nav a:hover,
+.liens-nav a.actif { color: var(--couleur-or); }
+.liens-nav a:hover::after,
+.liens-nav a.actif::after { width: 100%; }
+
+/* Bouton "Réserver" dans la nav (fond doré) */
+.lien-reserver {
+  background: var(--couleur-or) !important;
+  color: var(--couleur-noir) !important;
+  padding: 0.6rem 1.5rem !important;
+  font-weight: 500 !important;
+  transition: var(--transition) !important;
+}
+.lien-reserver:hover { background: var(--couleur-or-clair) !important; }
+.lien-reserver::after { display: none !important; }
+
+/* Icône menu hamburger (mobile uniquement) */
+.menu-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+.menu-hamburger span {
+  display: block;
+  width: 25px; height: 1px;
+  background: var(--couleur-blanc);
+  transition: var(--transition);
+}
+
+
+/* ============================================
+   SECTION PRINCIPALE (première vue / hero)
+   ============================================ */
+
+.section-principale {
+  height: 100vh;
+  min-height: 700px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Arrière-plan sombre dégradé */
+.fond-principal {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1208 40%, #0a0a0a 100%);
+}
+
+/* Petites particules dorées animées */
+.particules {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.particule {
+  position: absolute;
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, rgba(201, 168, 76, 0.4), transparent);
+  animation: tomber linear infinite;
+}
+/* Position et vitesse de chaque particule */
+.particule:nth-child(1) { left: 10%; animation-duration: 8s; }
+.particule:nth-child(2) { left: 25%; animation-duration: 12s; animation-delay: 2s; }
+.particule:nth-child(3) { left: 40%; animation-duration: 9s;  animation-delay: 4s; }
+.particule:nth-child(4) { left: 60%; animation-duration: 11s; animation-delay: 1s; }
+.particule:nth-child(5) { left: 75%; animation-duration: 7s;  animation-delay: 3s; }
+.particule:nth-child(6) { left: 90%; animation-duration: 10s; animation-delay: 5s; }
+
+/* Contenu centré par-dessus le fond */
+.contenu-principal {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+/* Petit texte décoratif au-dessus du titre */
+.sous-titre-dessus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.sous-titre-dessus span {
+  font-size: 0.72rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--couleur-or);
+}
+.ligne-deco {
+  width: 40px; height: 1px;
+  background: var(--couleur-or);
+  opacity: 0.5;
+}
+
+/* Grand titre */
+.section-principale h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  animation: monterFadeIn 1.2s ease 0.3s both;
+}
+.section-principale h1 em {
+  color: var(--couleur-or);
+  font-style: italic;
+}
+
+/* Description sous le titre */
+.description-hero {
+  font-size: 1rem;
+  color: rgba(245, 240, 232, 0.6);
+  letter-spacing: 0.05em;
+  max-width: 480px;
+  margin: 0 auto 3rem;
+  animation: monterFadeIn 1.2s ease 0.5s both;
+}
+
+/* Boutons d'action */
+.boutons-hero {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: monterFadeIn 1.2s ease 0.7s both;
+}
+
+
+/* ============================================
+   FORMULAIRE DE RECHERCHE DE CHAMBRE
+   ============================================ */
+
+.bloc-recherche {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: -2rem auto 0;
+  padding: 0 4rem;
+}
+
+/* Conteneur du formulaire en grille */
+.formulaire-recherche {
+  background: var(--couleur-gris2);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  align-items: stretch;
+}
+
+/* Chaque champ de recherche */
+.champ-recherche {
+  padding: 1.2rem 1.5rem;
+  border-right: 1px solid rgba(201, 168, 76, 0.1);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.champ-recherche:hover { background: rgba(201, 168, 76, 0.05); }
+
+/* Label au-dessus de l'input */
+.champ-recherche label {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--couleur-or);
+  margin-bottom: 0.3rem;
+}
+
+/* Style des inputs et selects dans la recherche */
+.champ-recherche input,
+.champ-recherche select {
+  background: transparent;
+  border: none;
+  color: var(--couleur-blanc);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  width: 100%;
+  outline: none;
+  cursor: pointer;
+}
+.champ-recherche select option { background: var(--couleur-gris2); }
+
+/* Bouton de recherche */
+.bouton-rechercher {
+  background: var(--couleur-or);
+  border: none;
+  cursor: pointer;
+  padding: 0 2rem;
+  color: var(--couleur-noir);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.bouton-rechercher:hover { background: var(--couleur-or-clair); }
+
+
+/* ============================================
+   STATISTIQUES (chiffres clés)
+   ============================================ */
+
+.ligne-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--couleur-gris2);
+  border: 1px solid rgba(201, 168, 76, 0.1);
+  margin-top: 4rem;
+}
+
+/* Chaque chiffre */
+.element-stat {
+  padding: 2rem;
+  border-right: 1px solid rgba(201, 168, 76, 0.1);
+  text-align: center;
+}
+.element-stat:last-child { border-right: none; }
+
+.chiffre-stat {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--couleur-or);
+  line-height: 1;
+}
+
+.label-stat {
+  font-size: 0.78rem;
+  color: var(--couleur-texte);
+  letter-spacing: 0.1em;
+  margin-top: 0.3rem;
+}
+
+
+/* ============================================
+   BOUTONS RÉUTILISABLES
+   ============================================ */
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+/* Bouton doré (principal) */
+.bouton-or {
+  background: var(--couleur-or);
+  color: var(--couleur-noir);
+}
+.bouton-or:hover {
+  background: var(--couleur-or-clair);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(201, 168, 76, 0.3);
+}
+
+/* Bouton avec contour doré (secondaire) */
+.bouton-contour {
+  background: transparent;
+  color: var(--couleur-or);
+  border: 1px solid var(--couleur-or);
+}
+.bouton-contour:hover {
+  background: var(--couleur-or);
+  color: var(--couleur-noir);
+}
+
+/* Bouton sombre */
+.bouton-sombre {
+  background: var(--couleur-gris3);
+  color: var(--couleur-blanc);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+}
+.bouton-sombre:hover {
+  border-color: var(--couleur-or);
+  color: var(--couleur-or);
+}
+
+
+/* ============================================
+   SECTIONS DE CONTENU
+   ============================================ */
+
+.section { padding: 6rem 4rem; }
+.section-petite { padding: 4rem 4rem; }
+
+/* Petit label au-dessus d'un titre de section */
+.label-section {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--couleur-or);
+  margin-bottom: 0.75rem;
+}
+
+/* Grand titre de section */
+.titre-section {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+/* Sous-titre de section */
+.sous-titre-section {
+  font-size: 1rem;
+  color: var(--couleur-texte);
+  max-width: 550px;
+  line-height: 1.8;
+}
+
+/* Trait doré horizontal décoratif */
+.separateur {
+  width: 60px; height: 1px;
+  background: var(--couleur-or);
+  margin: 1.5rem 0;
+}
+
+
+/* ============================================
+   CARTES DE CHAMBRES
+   ============================================ */
+
+/* Grille de chambres (3 colonnes) */
+.grille-chambres {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2px;
+  margin-top: 3rem;
+}
+
+/* Carte individuelle */
+.carte-chambre {
+  position: relative;
+  overflow: hidden;
+  background: var(--couleur-gris2);
+  transition: var(--transition);
+}
+.carte-chambre:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Image de la chambre */
+.image-chambre {
+  height: 260px;
+  background: linear-gradient(135deg, var(--couleur-gris3), var(--couleur-gris));
+  position: relative;
+  overflow: hidden;
+}
+.fond-image-chambre {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s ease;
+  opacity: 0.7;
+}
+.carte-chambre:hover .fond-image-chambre { transform: scale(1.08); }
+
+/* Badge (ex: "Populaire", "Suite") */
+.badge-chambre {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  background: var(--couleur-or);
+  color: var(--couleur-noir);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+}
+
+/* Corps de la carte (texte + prix) */
+.corps-carte {
+  padding: 1.8rem;
+}
+.corps-carte h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+/* Affichage du prix */
+.prix-chambre {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin: 1.2rem 0;
+}
+.prix-chambre .montant {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  color: var(--couleur-or);
+  font-weight: 300;
+}
+.prix-chambre .par-nuit {
+  font-size: 0.78rem;
+  color: var(--couleur-texte);
+}
+
+
+/* ============================================
+   FORMULAIRES (réservation, contact...)
+   ============================================ */
+
+.conteneur-formulaire {
+  max-width: 700px;
+  margin: 0 auto;
+  background: var(--couleur-gris2);
+  padding: 3rem;
+  border: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+/* Deux colonnes côte à côte */
+.rangee-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+/* Trois colonnes */
+.rangee-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+
+/* Un champ de formulaire */
+.groupe-champ { margin-bottom: 1.5rem; }
+.groupe-champ.large { grid-column: 1 / -1; } /* Prend toute la largeur */
+
+.groupe-champ label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--couleur-or);
+}
+
+.groupe-champ input,
+.groupe-champ select,
+.groupe-champ textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: var(--couleur-gris3);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  color: var(--couleur-blanc);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  outline: none;
+  appearance: none;
+}
+/* Bordure dorée au focus */
+.groupe-champ input:focus,
+.groupe-champ select:focus,
+.groupe-champ textarea:focus {
+  border-color: var(--couleur-or);
+  background: rgba(201, 168, 76, 0.05);
+}
+.groupe-champ input::placeholder,
+.groupe-champ textarea::placeholder { color: var(--couleur-texte); }
+.groupe-champ select option { background: var(--couleur-gris2); color: var(--couleur-blanc); }
+
+
+/* ============================================
+   AVIS CLIENTS
+   ============================================ */
+
+.grille-avis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+/* Carte d'avis */
+.carte-avis {
+  background: var(--couleur-gris2);
+  padding: 2rem;
+  border: 1px solid rgba(201, 168, 76, 0.08);
+  transition: var(--transition);
+}
+.carte-avis:hover { border-color: rgba(201, 168, 76, 0.3); }
+
+/* Étoiles */
+.etoiles { color: var(--couleur-or); font-size: 0.9rem; margin-bottom: 1rem; }
+
+/* Texte de l'avis */
+.texte-avis {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.8;
+  color: rgba(245, 240, 232, 0.85);
+  margin-bottom: 1.5rem;
+}
+
+
+/* ============================================
+   SECTION APPEL À L'ACTION (bande dorée)
+   ============================================ */
+
+.bande-action {
+  background: linear-gradient(135deg, var(--couleur-or-fonce) 0%, var(--couleur-or) 50%, var(--couleur-or-fonce) 100%);
+  padding: 4rem;
+  text-align: center;
+}
+
+.bande-action h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+
+  font-weight: 300;
+  color: var(--couleur-noir);
+  margin-bottom: 0.5rem;
+}
+.bande-action p {
+  color: rgba(10, 10, 10, 0.7);
+  margin-bottom: 2rem;
+}
+
+/* Bouton sur fond doré (couleurs inversées) */
+.bouton-sur-or {
+  background: var(--couleur-noir) !important;
+  color: var(--couleur-or) !important;
+}
+.bouton-sur-or:hover { background: var(--couleur-gris) !important; }
+
+
+/* ============================================
+   PIED DE PAGE (footer)
+   ============================================ */
+
+footer {
+  background: var(--couleur-gris);
+  border-top: 1px solid rgba(201, 168, 76, 0.15);
+  padding: 4rem 4rem 2rem;
+}
+
+/* 4 colonnes dans le footer */
+.grille-footer {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+/* Bloc marque / description */
+.marque-footer h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--couleur-or);
+  margin-bottom: 1rem;
+}
+.marque-footer p { font-size: 0.9rem; color: var(--couleur-texte); line-height: 1.8; }
+
+/* Colonnes de liens dans le footer */
+.colonne-footer h4 {
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--couleur-or);
+  margin-bottom: 1.2rem;
+}
+.colonne-footer ul li { margin-bottom: 0.6rem; }
+.colonne-footer ul li a {
+  font-size: 0.88rem;
+  color: var(--couleur-texte);
+  transition: var(--transition);
+}
+.colonne-footer ul li a:hover { color: var(--couleur-or); padding-left: 4px; }
+
+/* Barre tout en bas du footer */
+.bas-footer {
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: rgba(136, 136, 136, 0.6);
+}
+
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+/* Montée avec fondu */
+@keyframes monterFadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Simple fondu */
+@keyframes fondu {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Chute des particules */
+@keyframes tomber {
+  from { transform: translateY(-100px); opacity: 0; }
+  to   { transform: translateY(100vh); opacity: 1; }
+}
+
+/* Classes d'animation réutilisables */
+.animer      { animation: monterFadeIn 0.8s ease both; }
+.animer-2    { animation: monterFadeIn 0.8s ease 0.2s both; }
+.animer-3    { animation: monterFadeIn 0.8s ease 0.4s both; }
+
+
+/* ============================================
+   RESPONSIVE — ADAPTATION MOBILE
+   ============================================ */
+
+/* Tablette (moins de 1024px) */
+@media (max-width: 1024px) {
+  .barre-nav { padding: 1.2rem 2rem; }
+  .section, .section-petite { padding: 5rem 2rem; }
+  .grille-footer { grid-template-columns: 1fr 1fr; }
+}
+
+/* Formulaire de recherche sur tablette */
+@media (max-width: 900px) {
+  .formulaire-recherche { grid-template-columns: 1fr 1fr; }
+  .bouton-rechercher { grid-column: span 2; }
+  .ligne-stats { grid-template-columns: repeat(2, 1fr); }
+  .bloc-recherche { padding: 0 1.5rem; }
+}
+
+/* Mobile (moins de 768px) */
+@media (max-width: 768px) {
+  .barre-nav { padding: 1rem 1.5rem; }
+  /* On cache les liens et on affiche le hamburger */
+  .liens-nav { display: none; }
+  .menu-hamburger { display: flex; }
+  .section, .section-petite { padding: 4rem 1.5rem; }
+  .rangee-2, .rangee-3 { grid-template-columns: 1fr; }
+  .grille-avis { grid-template-columns: 1fr; }
+  .grille-chambres { grid-template-columns: 1fr; }
+  .grille-footer { grid-template-columns: 1fr; gap: 2rem; }
+  .bas-footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+}

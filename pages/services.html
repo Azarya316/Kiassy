@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services — Hôtel Lumière</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    body { padding-top: 80px; }
+    .services-hero-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--charbon);
+    }
+    .service-hero-card {
+      min-height: 380px; position: relative; overflow: hidden;
+      display: flex; align-items: flex-end; padding: 2rem;
+      background: var(--gris-moyen); cursor: pointer;
+    }
+    .service-hero-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 60%);
+      z-index: 1;
+    }
+    .service-hero-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: transform 0.6s ease;
+    }
+    .service-hero-card:hover .service-hero-bg { transform: scale(1.08); }
+    .service-hero-content { position: relative; z-index: 2; }
+    .service-hero-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .service-hero-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 0.3rem; }
+    .service-hero-content p { font-size: 0.82rem; color: rgba(245,240,232,0.7); }
+    .service-detail {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; border-bottom: 1px solid rgba(201,168,76,0.08);
+    }
+    .service-detail:nth-child(even) > .service-text { order: 2; }
+    .service-detail:nth-child(even) > .service-visual { order: 1; }
+    .service-text { padding: 4rem; display: flex; flex-direction: column; justify-content: center; }
+    .service-visual {
+      background: var(--gris-fonce); min-height: 400px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem; position: relative; overflow: hidden;
+    }
+    .service-visual::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(45deg, rgba(201,168,76,0.02) 0px, rgba(201,168,76,0.02) 1px, transparent 1px, transparent 30px);
+    }
+    .service-tag { margin-bottom: 0.5rem; }
+    .service-list { margin-top: 1.5rem; }
+    .service-list li { padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.88rem; color: var(--gris-clair); display: flex; gap: 0.5rem; }
+    .service-list li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+    @media (max-width: 900px) {
+      .services-hero-grid { grid-template-columns: 1fr; }
+      .service-detail { grid-template-columns: 1fr; }
+      .service-detail:nth-child(even) > .service-text { order: 1; }
+      .service-detail:nth-child(even) > .service-visual { order: 2; }
+      .service-text { padding: 2.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar scrolled">
+  <a href="../index.html" class="nav-logo">Hôtel <span>Lumière</span></a>
+  <div class="nav-links">
+    <a href="../index.html">Accueil</a>
+    <a href="chambres.html">Chambres</a>
+    <a href="services.html" class="active">Services</a>
+    <a href="restaurant.html">Restaurant</a>
+    <a href="galerie.html">Galerie</a>
+    <a href="apropos.html">À Propos</a>
+    <a href="contact.html">Contact</a>
+    <a href="reservation.html" class="nav-cta">Réserver</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-img" style="background:linear-gradient(135deg,#080f1a,#0a0a0a);"></div>
+  <div class="page-hero-content animate-up">
+    <div class="page-hero-label">Prestations d'Exception</div>
+    <h1>Nos Services<br>Exclusifs</h1>
+  </div>
+</div>
+
+<!-- SERVICE CARDS -->
+<div class="services-hero-grid">
+  <div class="service-hero-card">
+    <div class="service-hero-bg" style="background:linear-gradient(135deg,#1a0a1a,#0a0a12);"></div>
+    <div class="service-hero-content">
+      <div class="service-hero-icon">💆</div>
+      <h3>Spa & Bien-être</h3>
+      <p>800 m² de sérénité absolue</p>
+    </div>
+  </div>
+  <div class="service-hero-card">
+    <div class="service-hero-bg" style="background:linear-gradient(135deg,#0a1a0a,#0a120a);"></div>
+    <div class="service-hero-content">
+      <div class="service-hero-icon">🍽️</div>
+      <h3>Gastronomie</h3>
+      <p>Restaurant étoilé Michelin</p>
+    </div>
+  </div>
+  <div class="service-hero-card">
+    <div class="service-hero-bg" style="background:linear-gradient(135deg,#1a1208,#0d0d06);"></div>
+    <div class="service-hero-content">
+      <div class="service-hero-icon">🛎️</div>
+      <h3>Conciergerie</h3>
+      <p>À votre service 24h/24, 7j/7</p>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES DETAIL -->
+<div class="service-detail">
+  <div class="service-text">
+    <div class="tag service-tag">Bien-être</div>
+    <h2 class="section-title">Spa Lumière</h2>
+    <div class="divider"></div>
+    <p style="color:var(--gris-clair);line-height:1.9;">Notre spa de 800 m² offre une expérience sensorielle sans égale. Piscine intérieure chauffée à 32°C, hammam, sauna finlandais et 8 cabines de soin vous accueillent dans un univers de bien-être total.</p>
+    <ul class="service-list">
+      <li>Piscine intérieure chauffée (32°C)</li>
+      <li>Hammam & Sauna finlandais</li>
+      <li>8 cabines de soins individuels</li>
+      <li>Suite de soins en duo</li>
+      <li>Gamme SISLEY Paris exclusive</li>
+      <li>Coach bien-être disponible</li>
+    </ul>
+    <a href="reservation.html" class="btn btn-outline" style="align-self:flex-start;margin-top:2rem;">Réserver un soin →</a>
+  </div>
+  <div class="service-visual" style="font-size:8rem;">💆</div>
+</div>
+
+<div class="service-detail" style="background:var(--charbon);">
+  <div class="service-text">
+    <div class="tag service-tag">Sport</div>
+    <h2 class="section-title">Fitness Center</h2>
+    <div class="divider"></div>
+    <p style="color:var(--gris-clair);line-height:1.9;">Notre salle de fitness dernier cri, disponible 24h/24, vous permet de maintenir votre routine sportive même en déplacement. Équipements Technogym de haute gamme et coach personnel sur réservation.</p>
+    <ul class="service-list">
+      <li>Cardio & musculation Technogym</li>
+      <li>Coach personnel sur réservation</li>
+      <li>Cours collectifs quotidiens</li>
+      <li>Yoga & méditation</li>
+      <li>Tenue et serviettes fournies</li>
+    </ul>
+  </div>
+  <div class="service-visual">🏋️</div>
+</div>
+
+<div class="service-detail">
+  <div class="service-text">
+    <div class="tag service-tag">Transport</div>
+    <h2 class="section-title">Voiturier & Transferts</h2>
+    <div class="divider"></div>
+    <p style="color:var(--gris-clair);line-height:1.9;">Nos chauffeurs privés en limousine sont à votre disposition pour tous vos transferts aéroport, gare ou excursions personnalisées dans Paris et sa région.</p>
+    <ul class="service-list">
+      <li>Transferts aéroports (CDG, ORY, BVA)</li>
+      <li>Limousines & berlines de luxe</li>
+      <li>Voiturier 24h/24</li>
+      <li>Garage sécurisé</li>
+      <li>Excursions sur mesure</li>
+    </ul>
+  </div>
+  <div class="service-visual" style="background:var(--gris-moyen);">🚗</div>
+</div>
+
+<div class="service-detail" style="background:var(--charbon);">
+  <div class="service-text">
+    <div class="tag service-tag">Événements</div>
+    <h2 class="section-title">Salles de Réunion & Événements</h2>
+    <div class="divider"></div>
+    <p style="color:var(--gris-clair);line-height:1.9;">Que ce soit pour un séminaire d'entreprise, un mariage ou une réception privée, nos espaces modulables accueillent jusqu'à 250 personnes dans un cadre d'exception.</p>
+    <ul class="service-list">
+      <li>4 salles de réunion (10-50 pers.)</li>
+      <li>Grand Salon (jusqu'à 250 pers.)</li>
+      <li>Équipement audiovisuel haut de gamme</li>
+      <li>Traiteur gastronomique</li>
+      <li>Chef de projet dédié</li>
+    </ul>
+    <a href="contact.html" class="btn btn-outline" style="align-self:flex-start;margin-top:2rem;">Demande de devis →</a>
+  </div>
+  <div class="service-visual">🎪</div>
+</div>
+
+<!-- CONCIERGERIE -->
+<section class="section" style="text-align:center;">
+  <div class="section-label">Service Premium</div>
+  <h2 class="section-title">Conciergerie 24h/24</h2>
+  <div class="divider" style="margin:1.5rem auto;"></div>
+  <p class="section-subtitle" style="margin:0 auto 3rem;text-align:center;">Notre équipe de concierges certifiés Les Clefs d'Or anticipe chaque désir et exauce toutes vos envies, des plus simples aux plus extraordinaires.</p>
+  <div class="amenities-grid" style="max-width:900px;margin:0 auto;">
+    <div class="amenity-card"><div class="amenity-icon">🎭</div><h4>Spectacles & Sorties</h4><p>Réservation de restaurants, théâtres, concerts et expositions.</p></div>
+    <div class="amenity-card"><div class="amenity-icon">💐</div><h4>Fleuriste</h4><p>Compositions florales sur mesure livrées dans votre chambre.</p></div>
+    <div class="amenity-card"><div class="amenity-icon">👗</div><h4>Personal Shopper</h4><p>Shopping privé dans les grandes maisons parisiennes.</p></div>
+    <div class="amenity-card"><div class="amenity-icon">📸</div><h4>Photographe</h4><p>Séance photo privée dans Paris ou à l'hôtel.</p></div>
+  </div>
+  <a href="reservation.html" class="btn btn-gold" style="margin-top:3rem;">Réserver votre séjour →</a>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><h2>Hôtel Lumière</h2><p>15, Avenue des Lumières<br>75008 Paris, France</p></div>
+    <div class="footer-col"><h4>L'Hôtel</h4><ul><li><a href="../index.html">Accueil</a></li><li><a href="chambres.html">Chambres</a></li><li><a href="services.html">Services</a></li></ul></div>
+    <div class="footer-col"><h4>Réservation</h4><ul><li><a href="reservation.html">Réserver</a></li><li><a href="offres.html">Offres</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Légal</h4><ul><li><a href="#">Mentions Légales</a></li><li><a href="#">Confidentialité</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2024 Hôtel Lumière</span><span>Paris, France</span></div>
+</footer>
+</body>
+</html>

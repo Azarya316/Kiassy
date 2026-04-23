@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hôtel Kiassy — Luxe & Élégance</title>
+
+    <!-- On relie notre fichier de style -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+
+    <!-- =============================================
+         BARRE DE NAVIGATION (menu en haut)
+         ============================================= -->
+    <nav class="barre-nav" id="barre-nav">
+
+      <!-- Logo de l'hôtel -->
+      <a href="index.html" class="logo-hotel">
+        Hôtel <span>Kiassy</span>
+      </a>
+
+      <!-- Liens du menu -->
+      <div class="liens-nav">
+        <a href="index.html" class="actif">Accueil</a>
+        <a href="pages/chambres.html">Chambres</a>
+        <a href="pages/services.html">Services</a>
+        <a href="pages/restaurant.html">Restaurant</a>
+        <a href="pages/galerie.html">Galerie</a>
+        <a href="pages/apropos.html">À Propos</a>
+        <a href="pages/contact.html">Contact</a>
+        <!-- Bouton principal de réservation -->
+        <a href="pages/reservation.html" class="lien-reserver">Réserver</a>
+      </div>
+
+      <!-- Icône hamburger (visible uniquement sur mobile) -->
+      <div class="menu-hamburger" onclick="ouvrirMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+    </nav>
+
+
+    <!-- =============================================
+         SECTION PRINCIPALE (première vue du site)
+         ============================================= -->
+    <section class="section-principale">
+
+      <!-- Fond avec effet sombre -->
+      <div class="fond-principal">
+        <!-- Particules dorées qui tombent -->
+        <div class="particules">
+          <div class="particule"></div>
+          <div class="particule"></div>
+          <div class="particule"></div>
+          <div class="particule"></div>
+          <div class="particule"></div>
+          <div class="particule"></div>
+        </div>
+      </div>
+
+      <!-- Texte au centre de la section principale -->
+      <div class="contenu-principal animer">
+
+        <!-- Petit texte décoratif au-dessus du titre -->
+        <div class="sous-titre-dessus">
+          <div class="ligne-deco"></div>
+          <span>Manakara · Depuis 2000</span>
+          <div class="ligne-deco"></div>
+        </div>
+
+        <!-- Grand titre de bienvenue -->
+        <h1>L'Art de<br /><em>Vivre</em><br />à Manakara</h1>
+
+        <!-- Deux boutons d'action -->
+        <div class="boutons-hero">
+          <a href="pages/reservation.html" class="bouton bouton-or">
+            Réserver votre séjour
+          </a>
+          <a href="pages/chambres.html" class="bouton bouton-contour">
+            Découvrir les chambres
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =============================================
+         FORMULAIRE DE RECHERCHE DE CHAMBRE
+         ============================================= -->
+    <div class="bloc-recherche">
+      <form class="formulaire-recherche" onsubmit="return false;">
+
+        <!-- Champ date d'arrivée -->
+        <div class="champ-recherche">
+          <label>Arrivée</label>
+          <input type="date" />
+        </div>
+
+        <!-- Champ date de départ -->
+        <div class="champ-recherche">
+          <label>Départ</label>
+          <input type="date" />
+        </div>
+
+        <!-- Champ nombre de voyageurs -->
+        <div class="champ-recherche">
+          <label>Voyageurs</label>
+          <select>
+            <option>1 adulte</option>
+            <option>2 adultes</option>
+            <option>2 adultes + 1 enfant</option>
+            <option>2 adultes + 2 enfants</option>
+          </select>
+        </div>
+
+        <!-- Champ type de chambre -->
+        <div class="champ-recherche">
+          <label>Type de chambre</label>
+          <select>
+            <option>Toutes</option>
+            <option>Classique</option>
+            <option>Supérieure</option>
+            <option>Suite</option>
+            <option>Suite Présidentielle</option>
+          </select>
+        </div>
+
+        <!-- Bouton pour lancer la recherche -->
+        <button class="bouton-rechercher" onclick="window.location='pages/reservation.html'">
+          Rechercher
+        </button>
+
+      </form>
+    </div>
+
+
+    <!-- =============================================
+         STATISTIQUES (chiffres clés de l'hôtel)
+         ============================================= -->
+    <section class="section-petite">
+      <div class="ligne-stats">
+
+        <div class="element-stat">
+          <div class="chiffre-stat">120</div>
+          <div class="label-stat">Chambres &amp; Suites</div>
+        </div>
+
+        <div class="element-stat">
+          <div class="chiffre-stat">5★</div>
+          <div class="label-stat">Classement Officiel</div>
+        </div>
+
+        <div class="element-stat">
+          <div class="chiffre-stat">100</div>
+          <div class="label-stat">Ans d'Histoire</div>
+        </div>
+
+        <div class="element-stat">
+          <div class="chiffre-stat">98%</div>
+          <div class="label-stat">Satisfaction Client</div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =============================================
+         NOS CHAMBRES & SUITES
+         ============================================= -->
+    <section class="section">
+
+      <!-- En-tête de la section avec lien "Voir tout" -->
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <div class="label-section">Hébergements</div>
+          <h2 class="titre-section">Nos Chambres<br />&amp; Suites</h2>
+        </div>
+        <a href="pages/chambres.html" class="bouton bouton-contour">Voir tout →</a>
+      </div>
+
+      <!-- Grille des 3 chambres -->
+      <div class="grille-chambres">
+
+        <!-- Carte chambre 1 — avec vraie photo -->
+        <div class="carte-chambre">
+          <div class="image-chambre">
+            <!-- Image réelle de la chambre classique -->
+            <div class="fond-image-chambre" style="background-image: url('images/bed-4416515_1280.jpg'); background-size: cover; background-position: center;"></div>
+            <span class="badge-chambre">Classique</span>
+          </div>
+          <div class="corps-carte">
+            <h3>Chambre Classique</h3>
+            <p style="font-size: 0.85rem; color: var(--couleur-texte);">
+              Élégance intemporelle avec vue sur cour intérieure.
+            </p>
+            <div class="prix-chambre">
+              <span class="montant">MGA 100K</span>
+              <span class="par-nuit">/ nuit</span>
+            </div>
+            <a href="pages/reservation.html" class="bouton bouton-contour" style="font-size:0.75rem; padding:0.65rem 1.5rem;">
+              Réserver
+            </a>
+          </div>
+        </div>
+
+        <!-- Carte chambre 2 -->
+        <div class="carte-chambre">
+          <div class="image-chambre">
+            <div class="fond-image-chambre" style="background-image: url('images/chambres-hotel-modernes-elegantes_1417-8488.avif'); background-size: cover; background-position: center;"></div>
+            <span class="badge-chambre">Populaire</span>
+          </div>
+          <div class="corps-carte">
+            <h3>Chambre Supérieure</h3>
+            <p style="font-size: 0.85rem; color: var(--couleur-texte);">
+              Vue panoramique sur les toits de la ville.
+            </p>
+            <div class="prix-chambre">
+              <span class="montant">MGA 420K</span>
+              <span class="par-nuit">/ nuit</span>
+            </div>
+            <a href="pages/reservation.html" class="bouton bouton-contour" style="font-size:0.75rem; padding:0.65rem 1.5rem;">
+              Réserver
+            </a>
+          </div>
+        </div>
+
+        <!-- Carte chambre 3 -->
+        <div class="carte-chambre">
+          <div class="image-chambre">
+            <div class="fond-image-chambre" style="background-image: url('images/gettyimages-1081883816-612x612.jpg'); background-size: cover; background-position: center;"></div>
+            <span class="badge-chambre">Suite</span>
+          </div>
+          <div class="corps-carte">
+            <h3>Suite Lumière</h3>
+            <p style="font-size: 0.85rem; color: var(--couleur-texte);">
+              Notre suite signature avec terrasse privée.
+            </p>
+            <div class="prix-chambre">
+              <span class="montant">MGA 850K</span>
+              <span class="par-nuit">/ nuit</span>
+            </div>
+            <a href="pages/reservation.html" class="bouton bouton-contour" style="font-size:0.75rem; padding:0.65rem 1.5rem;">
+              Réserver
+            </a>
+          </div>
+        </div>
+
+        <div class="carte-chambre">
+          <div class="image-chambre">
+            <div class="fond-image-chambre" style="background-image: url('images/hotel-1749602_640.jpg'); background-size: cover; background-position: center;"></div>
+            <span class="badge-chambre">Suite</span>
+          </div>
+          <div class="corps-carte">
+            <h3>Suite Lumière</h3>
+            <p style="font-size: 0.85rem; color: var(--couleur-texte);">
+              Notre suite signature avec terrasse privée.
+            </p>
+            <div class="prix-chambre">
+              <span class="montant">MGA 850K</span>
+              <span class="par-nuit">/ nuit</span>
+            </div>
+            <a href="pages/reservation.html" class="bouton bouton-contour" style="font-size:0.75rem; padding:0.65rem 1.5rem;">
+              Réserver
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      
+    </section>
+
+
+    <!-- =============================================
+         AVIS DE NOS CLIENTS
+         ============================================= -->
+    <section class="section">
+
+      <!-- Titre centré -->
+      <div style="text-align:center; max-width:600px; margin:0 auto;">
+        <div class="label-section">Témoignages</div>
+        <h2 class="titre-section">Ce Que Disent<br />Nos Hôtes</h2>
+        <div class="separateur" style="margin: 1.5rem auto;"></div>
+      </div>
+
+      <!-- Grille des 3 avis -->
+      <div class="grille-avis">
+
+        <div class="carte-avis">
+          <div class="etoiles">★★★★★</div>
+          <p class="texte-avis">
+            « Un séjour absolument parfait. Le service est d'une attention rare,
+            les chambres sublimes, et l'atmosphère magique. Nous reviendrons
+            sans hésiter. »
+          </p>
+        </div>
+
+        <div class="carte-avis">
+          <div class="etoiles">★★★★★</div>
+          <p class="texte-avis">
+            « Mafinaritra be ny fandraisana anay tato, mahay manaja vahyny
+            sy mafinaritra be daholo ny mpiasa. Mankasitraka e ! »
+          </p>
+        </div>
+
+        <div class="carte-avis">
+          <div class="etoiles">★★★★★</div>
+          <p class="texte-avis">
+            « L'hôtel idéal pour un voyage romantique. Le spa, le restaurant, le
+            service... tout était parfait. Une expérience inoubliable. »
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =============================================
+         BANDE D'APPEL À L'ACTION (fond doré)
+         ============================================= -->
+    <div class="bande-action">
+      <h2>Réservez Votre Séjour Idéal</h2>
+      <p>Disponibilités en temps réel · Annulation gratuite · Meilleur tarif garanti</p>
+      <a href="pages/reservation.html" class="bouton bouton-sur-or">
+        Réserver maintenant →
+      </a>
+    </div>
+
+
+    <!-- =============================================
+         PIED DE PAGE (footer)
+         ============================================= -->
+    <footer>
+
+      <!-- 4 colonnes d'informations -->
+      <div class="grille-footer">
+
+        <!-- Bloc marque et contact -->
+        <div class="marque-footer">
+          <h2>Hôtel Kiassy</h2>
+          <p>
+            Manakara be, Manakara<br /><br />
+            +261 34 00 000 00<br />
+            contact@hotel-kiassy.com
+          </p>
+        </div>
+
+        <!-- Colonne L'Hôtel -->
+        <div class="colonne-footer">
+          <h4>L'Hôtel</h4>
+          <ul>
+            <li><a href="pages/apropos.html">Notre Histoire</a></li>
+            <li><a href="pages/chambres.html">Chambres &amp; Suites</a></li>
+            <li><a href="pages/services.html">Services</a></li>
+            <li><a href="pages/restaurant.html">Restaurant</a></li>
+            <li><a href="pages/galerie.html">Galerie</a></li>
+          </ul>
+        </div>
+
+        <!-- Colonne Réservation -->
+        <div class="colonne-footer">
+          <h4>Réservation</h4>
+          <ul>
+            <li><a href="pages/reservation.html">Réserver en ligne</a></li>
+            <li><a href="pages/offres.html">Offres Spéciales</a></li>
+            <li><a href="pages/avis.html">Avis Clients</a></li>
+            <li><a href="pages/contact.html">Contact</a></li>
+            <li><a href="pages/faq.html">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Colonne Légal -->
+        <div class="colonne-footer">
+          <h4>Légal</h4>
+          <ul>
+            <li><a href="#">Mentions Légales</a></li>
+            <li><a href="#">Confidentialité</a></li>
+            <li><a href="#">CGU</a></li>
+            <li><a href="#">Accessibilité</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Ligne du bas -->
+      <div class="bas-footer">
+        <span>© 2024 Hôtel Kiassy. Tous droits réservés.</span>
+        <span>Fait avec ♥ à Manakara</span>
+      </div>
+
+    </footer>
+
+
+    <!-- =============================================
+         SCRIPTS JAVASCRIPT (comportements)
+         ============================================= -->
+    <script>
+
+      // Quand l'utilisateur défile, on ajoute la classe "défilé" à la nav
+      window.addEventListener('scroll', function () {
+        var nav = document.getElementById('barre-nav');
+        if (window.scrollY > 80) {
+          nav.classList.add('defilé');   // La nav devient compacte
+        } else {
+          nav.classList.remove('defilé'); // Elle reprend sa taille normale
+        }
+      });
+
+      // Ouvrir/fermer le menu mobile (hamburger)
+      function ouvrirMenu() {
+        var menu = document.querySelector('.liens-nav');
+        if (menu.style.display === 'flex') {
+          menu.style.display = 'none';  // On ferme le menu
+        } else {
+          menu.style.display = 'flex';  // On ouvre le menu
+        }
+      }
+
+    </script>
+
+  </body>
+</html>

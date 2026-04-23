@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confirmation — Hôtel Lumière</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    body { padding-top: 80px; background: var(--noir); }
+    .confirm-page { max-width: 800px; margin: 0 auto; padding: 5rem 2rem; }
+    .confetti { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    .confetti-piece {
+      position: absolute; width: 8px; height: 8px;
+      background: var(--gold);
+      animation: confettiFall linear forwards;
+      opacity: 0.8;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+    .check-wrapper {
+      width: 100px; height: 100px;
+      border: 2px solid var(--gold); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 2rem; position: relative;
+      animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    }
+    .check-wrapper::before {
+      content: ''; position: absolute; inset: -8px;
+      border: 1px solid rgba(201,168,76,0.3); border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes scaleIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.3; } }
+    .check-icon { font-size: 2.5rem; }
+    .confirm-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300; text-align: center; margin-bottom: 0.5rem;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+    .confirm-subtitle {
+      text-align: center; color: var(--gris-clair); font-size: 1rem;
+      margin-bottom: 3rem;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+    .booking-ref {
+      text-align: center; margin-bottom: 2.5rem;
+      animation: fadeUp 0.8s ease 0.6s both;
+    }
+    .booking-ref .ref-label { font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gris-clair); }
+    .booking-ref .ref-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem; color: var(--gold);
+      letter-spacing: 0.2em;
+    }
+    .booking-card {
+      background: var(--gris-fonce); border: 1px solid rgba(201,168,76,0.2);
+      padding: 2.5rem; margin-bottom: 2rem;
+      animation: fadeUp 0.8s ease 0.7s both;
+    }
+    .booking-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--gold); margin-bottom: 1.5rem; }
+    .booking-table { width: 100%; }
+    .booking-table tr td { padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
+    .booking-table td:first-child { color: var(--gris-clair); font-size: 0.85rem; width: 40%; }
+    .booking-table td:last-child { color: var(--blanc); font-size: 0.9rem; font-weight: 500; }
+    .next-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 2.5rem 0; animation: fadeUp 0.8s ease 0.9s both; }
+    .next-step { background: var(--gris-fonce); border: 1px solid rgba(201,168,76,0.1); padding: 1.5rem; text-align: center; }
+    .next-step .ns-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .next-step h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; margin-bottom: 0.3rem; }
+    .next-step p { font-size: 0.78rem; color: var(--gris-clair); }
+    .actions-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.8s ease 1s both; }
+    @media (max-width: 600px) {
+      .next-steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<!-- Confetti -->
+<div class="confetti" id="confetti"></div>
+
+<nav class="navbar scrolled">
+  <a href="../index.html" class="nav-logo">Hôtel <span>Lumière</span></a>
+  <div class="nav-links">
+    <a href="../index.html">Accueil</a>
+    <a href="chambres.html">Chambres</a>
+    <a href="services.html">Services</a>
+    <a href="restaurant.html">Restaurant</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="confirm-page" style="position:relative;z-index:1;">
+  <div class="check-wrapper">
+    <span class="check-icon">✓</span>
+  </div>
+
+  <h1 class="confirm-title">Réservation<br><em style="color:var(--gold);">Confirmée</em></h1>
+  <p class="confirm-subtitle">Merci pour votre confiance. Un email de confirmation vous a été envoyé.</p>
+
+  <div class="booking-ref">
+    <div class="ref-label">Numéro de réservation</div>
+    <div class="ref-num">LUM-2024-4821</div>
+  </div>
+
+  <div class="booking-card">
+    <h3>Détails de Votre Séjour</h3>
+    <table class="booking-table">
+      <tr><td>Hôtel</td><td>Hôtel Lumière ⭐⭐⭐⭐⭐<br><small style="color:var(--gris-clair);font-weight:400;">15, Avenue des Lumières, 75008 Paris</small></td></tr>
+      <tr><td>Chambre</td><td>Chambre Classique — Vue Cour</td></tr>
+      <tr><td>Arrivée</td><td>Samedi 15 Décembre 2024<br><small style="color:var(--gris-clair);font-weight:400;">À partir de 15h00</small></td></tr>
+      <tr><td>Départ</td><td>Mardi 18 Décembre 2024<br><small style="color:var(--gris-clair);font-weight:400;">Avant 12h00</small></td></tr>
+      <tr><td>Durée</td><td>3 nuits</td></tr>
+      <tr><td>Personnes</td><td>2 adultes</td></tr>
+      <tr><td>Statut paiement</td><td><span style="color:#4caf50;font-size:0.85rem;">✓ Paiement accepté</span></td></tr>
+      <tr><td>Total payé</td><td><span style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--gold);">€966</span></td></tr>
+    </table>
+  </div>
+
+  <div class="next-steps">
+    <div class="next-step">
+      <div class="ns-icon">📧</div>
+      <h4>Email de Confirmation</h4>
+      <p>Un récapitulatif complet a été envoyé à votre adresse email.</p>
+    </div>
+    <div class="next-step">
+      <div class="ns-icon">🕒</div>
+      <h4>Check-in & Check-out</h4>
+      <p>Arrivée à partir de 15h00. Départ avant 12h00 le dernier jour.</p>
+    </div>
+    <div class="next-step">
+      <div class="ns-icon">📞</div>
+      <h4>Besoin d'Aide ?</h4>
+      <p>Notre conciergerie est disponible 24h/24 au +33 1 42 00 00 00.</p>
+    </div>
+  </div>
+
+  <!-- Annulation -->
+  <div style="background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.2);padding:1.5rem;margin-bottom:2rem;text-align:center;">
+    <p style="font-size:0.85rem;color:var(--gris-clair);">
+      Annulation gratuite jusqu'au <strong style="color:var(--blanc);">13 décembre 2024 à 23h59</strong>.<br>
+      Pour annuler ou modifier, contactez-nous au <strong style="color:var(--gold);">+33 1 42 00 00 00</strong> ou par email à <strong style="color:var(--gold);">reservations@hotel-lumiere.fr</strong>
+    </p>
+  </div>
+
+  <div class="actions-row">
+    <a href="../index.html" class="btn btn-outline">← Retour à l'accueil</a>
+    <button class="btn btn-gold" onclick="window.print()">🖨️ Imprimer la confirmation</button>
+    <a href="contact.html" class="btn btn-dark">Contacter la conciergerie</a>
+  </div>
+</div>
+
+<script>
+  // Generate confetti
+  const container = document.getElementById('confetti');
+  const colors = ['#C9A84C', '#E8C97A', '#F5F0E8', '#9A7A2E', '#fff'];
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.cssText = `
+      left: ${Math.random()*100}%;
+      top: ${-10 - Math.random()*20}px;
+      background: ${colors[Math.floor(Math.random()*colors.length)]};
+      width: ${4 + Math.random()*8}px;
+      height: ${4 + Math.random()*8}px;
+      border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+      animation-duration: ${2 + Math.random()*4}s;
+      animation-delay: ${Math.random()*2}s;
+    `;
+    container.appendChild(p);
+  }
+  setTimeout(() => container.style.display = 'none', 6000);
+</script>
+</body>
+</html>

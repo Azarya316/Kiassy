@@ -3,215 +3,475 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chambres & Suites — Hôtel Lumière</title>
+  <title>Chambres & Suites — Hôtel Kiassy</title>
+
+  <!-- On relie le fichier de style principal -->
   <link rel="stylesheet" href="../css/style.css"/>
+
   <style>
+    /* Espace en haut pour ne pas être caché par la barre de navigation */
     body { padding-top: 80px; }
-    .filter-bar {
-      background: var(--gris-fonce);
-      border-bottom: 1px solid rgba(201,168,76,0.1);
+
+    /* ── Barre de filtres (Tout / Classique / Suite...) ── */
+    .barre-filtres {
+      background: var(--couleur-gris2);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.1);
       padding: 1.2rem 4rem;
-      display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
     }
-    .filter-bar span { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gris-clair); margin-right: 0.5rem; }
-    .filter-btn {
-      padding: 0.5rem 1.2rem; font-size: 0.78rem;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      border: 1px solid rgba(201,168,76,0.2); background: transparent;
-      color: var(--blanc); cursor: pointer; transition: var(--transition);
+
+    /* Texte "Filtrer :" */
+    .barre-filtres .texte-filtre {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--couleur-texte);
+      margin-right: 0.5rem;
     }
-    .filter-btn.active, .filter-btn:hover { background: var(--gold); color: var(--noir); border-color: var(--gold); }
-    .rooms-extended { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2px; }
-    .room-features { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
-    .room-feature-tag {
-      font-size: 0.7rem; padding: 0.25rem 0.7rem;
-      border: 1px solid rgba(201,168,76,0.2); color: var(--gris-clair);
+
+    /* Bouton de filtre */
+    .bouton-filtre {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      background: transparent;
+      color: var(--couleur-blanc);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    /* Bouton actif ou au survol : fond doré */
+    .bouton-filtre.actif,
+    .bouton-filtre:hover {
+      background: var(--couleur-or);
+      color: var(--couleur-noir);
+      border-color: var(--couleur-or);
+    }
+
+    /* Grille des chambres (plus large que sur l'accueil) */
+    .grille-chambres-etendue {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 2px;
+    }
+
+    /* Petites étiquettes de caractéristiques (WiFi, Jacuzzi...) */
+    .liste-equipements {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .etiquette-equipement {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.7rem;
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      color: var(--couleur-texte);
+    }
+
+    /* Infos rapides de la chambre (surface, lit, personnes) */
+    .infos-chambre {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 1rem 0;
+      font-size: 0.8rem;
+      color: var(--couleur-texte);
     }
   </style>
 </head>
+
 <body>
-<nav class="navbar scrolled" id="navbar">
-  <a href="../index.html" class="nav-logo">Hôtel <span>Lumière</span></a>
-  <div class="nav-links">
-    <a href="../index.html">Accueil</a>
-    <a href="chambres.html" class="active">Chambres</a>
-    <a href="services.html">Services</a>
-    <a href="restaurant.html">Restaurant</a>
-    <a href="galerie.html">Galerie</a>
-    <a href="apropos.html">À Propos</a>
-    <a href="contact.html">Contact</a>
-    <a href="reservation.html" class="nav-cta">Réserver</a>
+
+  <!-- =============================================
+       BARRE DE NAVIGATION
+       ============================================= -->
+  <nav class="barre-nav defilé" id="barre-nav">
+    <a href="../index.html" class="logo-hotel">Hôtel <span>Kiassy</span></a>
+
+    <div class="liens-nav">
+      <a href="../index.html">Accueil</a>
+      <a href="chambres.html" class="actif">Chambres</a>
+      <a href="services.html">Services</a>
+      <a href="restaurant.html">Restaurant</a>
+      <a href="galerie.html">Galerie</a>
+      <a href="apropos.html">À Propos</a>
+      <a href="contact.html">Contact</a>
+      <a href="reservation.html" class="lien-reserver">Réserver</a>
+    </div>
+
+    <div class="menu-hamburger" onclick="ouvrirMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+
+  <!-- =============================================
+       EN-TÊTE DE LA PAGE (bannière du haut)
+       ============================================= -->
+  <div class="entete-page">
+    <!-- Fond sombre dégradé (remplaçable par une vraie photo) -->
+    <div class="fond-entete" style="background: linear-gradient(135deg, #1a0f08 0%, #0a0a0a 100%);"></div>
+    <div class="contenu-entete animer">
+      <div class="label-entete">Hébergement</div>
+      <h1>Chambres<br>&amp; Suites</h1>
+    </div>
   </div>
-  <div class="hamburger"><span></span><span></span><span></span></div>
-</nav>
 
-<div class="page-hero">
-  <div class="page-hero-img" style="background: linear-gradient(135deg, #1a0f08 0%, #0a0a0a 100%);"></div>
-  <div class="page-hero-content animate-up">
-    <div class="page-hero-label">Hébergement</div>
-    <h1>Chambres<br>& Suites</h1>
+
+  <!-- =============================================
+       BARRE DE FILTRES
+       ============================================= -->
+  <div class="barre-filtres">
+    <span class="texte-filtre">Filtrer :</span>
+    <button class="bouton-filtre actif">Tout</button>
+    <button class="bouton-filtre">Classique</button>
+    <button class="bouton-filtre">Supérieure</button>
+    <button class="bouton-filtre">Suite</button>
+    <button class="bouton-filtre">Suite Présidentielle</button>
   </div>
-</div>
 
-<div class="filter-bar">
-  <span>Filtrer :</span>
-  <button class="filter-btn active">Tout</button>
-  <button class="filter-btn">Classique</button>
-  <button class="filter-btn">Supérieure</button>
-  <button class="filter-btn">Suite</button>
-  <button class="filter-btn">Suite Présidentielle</button>
-</div>
 
-<section class="section" style="background:var(--charbon);">
-  <div class="rooms-extended">
+  <!-- =============================================
+       LISTE DE TOUTES LES CHAMBRES
+       ============================================= -->
+  <section class="section" style="background: var(--couleur-gris);">
+    <div class="grille-chambres-etendue">
 
-    <!-- Chambre 1 -->
-    <div class="room-card">
-      <div class="room-card-img">
-        <div class="room-bg" style="background:linear-gradient(135deg,#2a1f0a,#1a1208);"></div>
-        <span class="room-badge">Classique</span>
-      </div>
-      <div class="room-card-body">
-        <h3>Chambre Classique</h3>
-        <p style="font-size:0.85rem;color:var(--gris-clair);">Vue sur cour intérieure, décoration Art Déco authentique. Parfaite pour une nuit en ville ou un court séjour professionnel.</p>
-        <div class="room-meta"><span>📐 28 m²</span><span>🛏️ King</span><span>👥 2 pers.</span><span>🏙️ Vue cour</span></div>
-        <div class="room-features">
-          <span class="room-feature-tag">WiFi HD</span><span class="room-feature-tag">Climatisation</span>
-          <span class="room-feature-tag">Minibar</span><span class="room-feature-tag">Coffre-fort</span>
+      <!-- ── Chambre 1 : Classique ── -->
+      <div class="carte-chambre">
+        <div class="image-chambre">
+          <!-- Remplace le dégradé par une vraie photo si tu en as une -->
+          <div class="fond-image-chambre" style="background: linear-gradient(135deg, #2a1f0a, #1a1208);"></div>
+          <span class="badge-chambre">Classique</span>
         </div>
-        <div class="room-price"><span class="amount">€280</span><span class="per">/ nuit</span></div>
-        <a href="reservation.html" class="btn btn-outline" style="font-size:0.75rem;padding:0.65rem 1.5rem;">Réserver →</a>
+        <div class="corps-carte">
+          <h3>Chambre Classique</h3>
+          <p style="font-size:0.85rem; color:var(--couleur-texte);">
+            Vue sur cour intérieure, décoration Art Déco authentique. Parfaite pour une nuit en ville ou un court séjour professionnel.
+          </p>
+          <!-- Infos rapides -->
+          <div class="infos-chambre">
+            <span>📐 28 m²</span>
+            <span>🛏️ King</span>
+            <span>👥 2 pers.</span>
+            <span>🏙️ Vue cour</span>
+          </div>
+          <!-- Équipements -->
+          <div class="liste-equipements">
+            <span class="etiquette-equipement">WiFi HD</span>
+            <span class="etiquette-equipement">Climatisation</span>
+            <span class="etiquette-equipement">Minibar</span>
+            <span class="etiquette-equipement">Coffre-fort</span>
+          </div>
+          <div class="prix-chambre">
+            <span class="montant">MGA 100K</span>
+            <span class="par-nuit">/ nuit</span>
+          </div>
+          <a href="reservation.html" class="bouton bouton-contour" style="font-size:0.75rem; padding:0.65rem 1.5rem;">
+            Réserver →
+          </a>
+        </div>
       </div>
+
+      <!-- ── Chambre 2 : Supérieure ── -->
+      <div class="carte-chambre">
+        <div class="image-chambre">
+          <div class="fond-image-chambre" style="background: linear-gradient(135deg, #0a1a20, #081215);"></div>
+          <span class="badge-chambre">Supérieure</span>
+        </div>
+        <div class="corps-carte">
+          <h3>Chambre Supérieure</h3>
+          <p style="font-size:0.85rem; color:var(--couleur-texte);">
+            Vue panoramique sur la ville, baignoire îlot et salon d'assise. Un cadre d'exception pour votre séjour.
+          </p>
+          <div class="infos-chambre">
+            <span>📐 38 m²</span>
+            <span>🛏️ King</span>
+            <span>👥 2 pers.</span>
+            <span>🌆 Vue ville</span>
+          </div>
+          <div class="liste-equipements">
+            <span class="etiquette-equipement">WiFi HD</span>
+            <span class="etiquette-equipement">Baignoire îlot</span>
+            <span class="etiquette-equipement">Salon d'assise</span>
+            <span class="etiquette-equipement">Nespresso</span>
+          </div>
+          <div class="prix-chambre">
+            <span class="montant">MGA 420K</span>
+            <span class="par-nuit">/ nuit</span>
+          </div>
+          <a href="reservation.html" class="bouton bouton-contour" style="font-size:0.75rem; padding:0.65rem 1.5rem;">
+            Réserver →
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Chambre 3 : Supérieure Twin ── -->
+      <div class="carte-chambre">
+        <div class="image-chambre">
+          <div class="fond-image-chambre" style="background: linear-gradient(135deg, #1a0a18, #0e0810);"></div>
+          <span class="badge-chambre">Supérieure</span>
+        </div>
+        <div class="corps-carte">
+          <h3>Chambre Supérieure Twin</h3>
+          <p style="font-size:0.85rem; color:var(--couleur-texte);">
+            Idéale pour deux amis ou collègues, avec deux lits doubles et vue sur l'avenue principale.
+          </p>
+          <div class="infos-chambre">
+            <span>📐 36 m²</span>
+            <span>🛏️ 2 Doubles</span>
+            <span>👥 2 pers.</span>
+            <span>🌆 Vue avenue</span>
+          </div>
+          <div class="liste-equipements">
+            <span class="etiquette-equipement">WiFi HD</span>
+            <span class="etiquette-equipement">Climatisation</span>
+            <span class="etiquette-equipement">Bureau de travail</span>
+            <span class="etiquette-equipement">Minibar</span>
+          </div>
+          <div class="prix-chambre">
+            <span class="montant">MGA 380K</span>
+            <span class="par-nuit">/ nuit</span>
+          </div>
+          <a href="reservation.html" class="bouton bouton-contour" style="font-size:0.75rem; padding:0.65rem 1.5rem;">
+            Réserver →
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Suite 1 : Suite Lumière ── -->
+      <div class="carte-chambre">
+        <div class="image-chambre">
+          <div class="fond-image-chambre" style="background: linear-gradient(135deg, #1f1a0a, #13110a);"></div>
+          <span class="badge-chambre">Suite</span>
+        </div>
+        <div class="corps-carte">
+          <h3>Suite Lumière</h3>
+          <p style="font-size:0.85rem; color:var(--couleur-texte);">
+            Notre suite signature avec terrasse privée et jacuzzi extérieur. Vue imprenable sur la ville et ses monuments.
+          </p>
+          <div class="infos-chambre">
+            <span>📐 65 m²</span>
+            <span>🛏️ King</span>
+            <span>👥 2 pers.</span>
+            <span>🌁 Terrasse privée</span>
+          </div>
+          <div class="liste-equipements">
+            <span class="etiquette-equipement">Terrasse privée</span>
+            <span class="etiquette-equipement">Jacuzzi</span>
+            <span class="etiquette-equipement">Salon séparé</span>
+            <span class="etiquette-equipement">Champagne offert</span>
+          </div>
+          <div class="prix-chambre">
+            <span class="montant">MGA 850K</span>
+            <span class="par-nuit">/ nuit</span>
+          </div>
+          <a href="reservation.html" class="bouton bouton-contour" style="font-size:0.75rem; padding:0.65rem 1.5rem;">
+            Réserver →
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Suite 2 : Suite Prestige ── -->
+      <div class="carte-chambre">
+        <div class="image-chambre">
+          <div class="fond-image-chambre" style="background: linear-gradient(135deg, #0a1520, #060f18);"></div>
+          <span class="badge-chambre">Suite</span>
+        </div>
+        <div class="corps-carte">
+          <h3>Suite Prestige</h3>
+          <p style="font-size:0.85rem; color:var(--couleur-texte);">
+            Décoration raffinée, deux salles de bain en marbre et une bibliothèque privée. L'apogée du luxe.
+          </p>
+          <div class="infos-chambre">
+            <span>📐 80 m²</span>
+            <span>🛏️ King</span>
+            <span>👥 2 pers.</span>
+            <span>📚 Bibliothèque</span>
+          </div>
+          <div class="liste-equipements">
+            <span class="etiquette-equipement">2 salles de bain</span>
+            <span class="etiquette-equipement">Bibliothèque</span>
+            <span class="etiquette-equipement">Butler privé</span>
+            <span class="etiquette-equipement">Dressing</span>
+          </div>
+          <div class="prix-chambre">
+            <span class="montant">MGA 1200K</span>
+            <span class="par-nuit">/ nuit</span>
+          </div>
+          <a href="reservation.html" class="bouton bouton-contour" style="font-size:0.75rem; padding:0.65rem 1.5rem;">
+            Réserver →
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Suite Présidentielle ── -->
+      <div class="carte-chambre">
+        <div class="image-chambre">
+          <div class="fond-image-chambre" style="background: linear-gradient(135deg, #1a1408, #0d0d04);"></div>
+          <span class="badge-chambre">Présidentielle</span>
+        </div>
+        <div class="corps-carte">
+          <h3>Suite Présidentielle</h3>
+          <p style="font-size:0.85rem; color:var(--couleur-texte);">
+            L'expérience ultime. Deux chambres, salle à manger privée, cuisine équipée et butler 24h/24.
+          </p>
+          <div class="infos-chambre">
+            <span>📐 200 m²</span>
+            <span>🛏️ 2 Kings</span>
+            <span>👥 4 pers.</span>
+            <span>👑 Butler 24h</span>
+          </div>
+          <div class="liste-equipements">
+            <span class="etiquette-equipement">Cuisine équipée</span>
+            <span class="etiquette-equipement">Salle à manger</span>
+            <span class="etiquette-equipement">Butler 24h/24</span>
+            <span class="etiquette-equipement">Terrasse panoramique</span>
+          </div>
+          <div class="prix-chambre">
+            <span class="montant">MGA 3500K</span>
+            <span class="par-nuit">/ nuit</span>
+          </div>
+          <a href="reservation.html" class="bouton bouton-contour" style="font-size:0.75rem; padding:0.65rem 1.5rem;">
+            Réserver →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       INFORMATIONS DE RÉSERVATION
+       ============================================= -->
+  <section class="section-petite" style="background: var(--couleur-gris2); text-align: center;">
+
+    <div class="label-section">Information</div>
+    <h2 class="titre-section" style="font-size: 2rem;">Politique de Réservation</h2>
+    <div class="separateur" style="margin: 1.5rem auto;"></div>
+
+    <!-- 3 avantages en colonne -->
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; max-width:800px; margin:2rem auto 0;">
+
+      <div>
+        <div style="color:var(--couleur-or); font-size:1.5rem; margin-bottom:0.5rem;">✓</div>
+        <h4 style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem;">Annulation Gratuite</h4>
+        <p style="font-size:0.82rem; color:var(--couleur-texte);">Jusqu'à 48h avant l'arrivée</p>
+      </div>
+
+      <div>
+        <div style="color:var(--couleur-or); font-size:1.5rem; margin-bottom:0.5rem;">💳</div>
+        <h4 style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem;">Paiement Sécurisé</h4>
+        <p style="font-size:0.82rem; color:var(--couleur-texte);">CB, Virement, PayPal acceptés</p>
+      </div>
+
+      <div>
+        <div style="color:var(--couleur-or); font-size:1.5rem; margin-bottom:0.5rem;">🏅</div>
+        <h4 style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem;">Meilleur Prix</h4>
+        <p style="font-size:0.82rem; color:var(--couleur-texte);">Garanti sur notre site officiel</p>
+      </div>
+
     </div>
 
-    <!-- Chambre 2 -->
-    <div class="room-card">
-      <div class="room-card-img">
-        <div class="room-bg" style="background:linear-gradient(135deg,#0a1a20,#081215);"></div>
-        <span class="room-badge">Supérieure</span>
+    <!-- Bouton de réservation -->
+    <a href="reservation.html" class="bouton bouton-or" style="margin-top: 2.5rem; display: inline-flex;">
+      Réserver maintenant →
+    </a>
+
+  </section>
+
+
+  <!-- =============================================
+       PIED DE PAGE
+       ============================================= -->
+  <footer>
+    <div class="grille-footer">
+
+      <div class="marque-footer">
+        <h2>Hôtel Kiassy</h2>
+        <p>
+          Manakara be, Manakara<br /><br />
+          +261 34 00 000 00<br />
+          contact@hotel-kiassy.com
+        </p>
       </div>
-      <div class="room-card-body">
-        <h3>Chambre Supérieure</h3>
-        <p style="font-size:0.85rem;color:var(--gris-clair);">Vue panoramique sur les toits de Paris, baignoire îlot et salon d'assise. Un cadre d'exception pour votre séjour.</p>
-        <div class="room-meta"><span>📐 38 m²</span><span>🛏️ King</span><span>👥 2 pers.</span><span>🌆 Vue Paris</span></div>
-        <div class="room-features">
-          <span class="room-feature-tag">WiFi HD</span><span class="room-feature-tag">Baignoire îlot</span>
-          <span class="room-feature-tag">Salon d'assise</span><span class="room-feature-tag">Nespresso</span>
-        </div>
-        <div class="room-price"><span class="amount">€420</span><span class="per">/ nuit</span></div>
-        <a href="reservation.html" class="btn btn-outline" style="font-size:0.75rem;padding:0.65rem 1.5rem;">Réserver →</a>
+
+      <div class="colonne-footer">
+        <h4>L'Hôtel</h4>
+        <ul>
+          <li><a href="../index.html">Accueil</a></li>
+          <li><a href="chambres.html">Chambres</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="restaurant.html">Restaurant</a></li>
+        </ul>
       </div>
+
+      <div class="colonne-footer">
+        <h4>Réservation</h4>
+        <ul>
+          <li><a href="reservation.html">Réserver</a></li>
+          <li><a href="offres.html">Offres Spéciales</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="colonne-footer">
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="#">Mentions Légales</a></li>
+          <li><a href="#">Confidentialité</a></li>
+          <li><a href="#">CGU</a></li>
+        </ul>
+      </div>
+
     </div>
 
-    <!-- Chambre 3 -->
-    <div class="room-card">
-      <div class="room-card-img">
-        <div class="room-bg" style="background:linear-gradient(135deg,#1a0a18,#0e0810);"></div>
-        <span class="room-badge">Supérieure</span>
-      </div>
-      <div class="room-card-body">
-        <h3>Chambre Supérieure Twin</h3>
-        <p style="font-size:0.85rem;color:var(--gris-clair);">Idéale pour deux amis ou collègues, avec deux lits doubles et vue sur l'avenue Haussmannienne.</p>
-        <div class="room-meta"><span>📐 36 m²</span><span>🛏️ 2 Doubles</span><span>👥 2 pers.</span><span>🌆 Vue avenue</span></div>
-        <div class="room-features">
-          <span class="room-feature-tag">WiFi HD</span><span class="room-feature-tag">Climatisation</span>
-          <span class="room-feature-tag">Bureau de travail</span><span class="room-feature-tag">Minibar</span>
-        </div>
-        <div class="room-price"><span class="amount">€380</span><span class="per">/ nuit</span></div>
-        <a href="reservation.html" class="btn btn-outline" style="font-size:0.75rem;padding:0.65rem 1.5rem;">Réserver →</a>
-      </div>
+    <div class="bas-footer">
+      <span>© 2024 Hôtel Kiassy. Tous droits réservés.</span>
+      <span>Fait avec ♥ à Manakara</span>
     </div>
+  </footer>
 
-    <!-- Suite 1 -->
-    <div class="room-card">
-      <div class="room-card-img">
-        <div class="room-bg" style="background:linear-gradient(135deg,#1f1a0a,#13110a);"></div>
-        <span class="room-badge">Suite</span>
-      </div>
-      <div class="room-card-body">
-        <h3>Suite Lumière</h3>
-        <p style="font-size:0.85rem;color:var(--gris-clair);">Notre suite signature avec terrasse privée et jacuzzi extérieur. Vue imprenable sur la Seine et les monuments parisiens.</p>
-        <div class="room-meta"><span>📐 65 m²</span><span>🛏️ King</span><span>👥 2 pers.</span><span>🌁 Terrasse privée</span></div>
-        <div class="room-features">
-          <span class="room-feature-tag">Terrasse privée</span><span class="room-feature-tag">Jacuzzi</span>
-          <span class="room-feature-tag">Salon séparé</span><span class="room-feature-tag">Champagne offert</span>
-        </div>
-        <div class="room-price"><span class="amount">€850</span><span class="per">/ nuit</span></div>
-        <a href="reservation.html" class="btn btn-outline" style="font-size:0.75rem;padding:0.65rem 1.5rem;">Réserver →</a>
-      </div>
-    </div>
 
-    <!-- Suite 2 -->
-    <div class="room-card">
-      <div class="room-card-img">
-        <div class="room-bg" style="background:linear-gradient(135deg,#0a1520,#060f18);"></div>
-        <span class="room-badge">Suite</span>
-      </div>
-      <div class="room-card-body">
-        <h3>Suite Haussmann</h3>
-        <p style="font-size:0.85rem;color:var(--gris-clair);">Décoration Napoléon III, deux salles de bain en marbre et une bibliothèque privée. L'apogée du raffinement parisien.</p>
-        <div class="room-meta"><span>📐 80 m²</span><span>🛏️ King</span><span>👥 2 pers.</span><span>📚 Bibliothèque</span></div>
-        <div class="room-features">
-          <span class="room-feature-tag">2 salles de bain</span><span class="room-feature-tag">Bibliothèque</span>
-          <span class="room-feature-tag">Butler privé</span><span class="room-feature-tag">Dressing</span>
-        </div>
-        <div class="room-price"><span class="amount">€1200</span><span class="per">/ nuit</span></div>
-        <a href="reservation.html" class="btn btn-outline" style="font-size:0.75rem;padding:0.65rem 1.5rem;">Réserver →</a>
-      </div>
-    </div>
+  <!-- =============================================
+       SCRIPTS JAVASCRIPT
+       ============================================= -->
+  <script>
 
-    <!-- Suite Présidentielle -->
-    <div class="room-card">
-      <div class="room-card-img">
-        <div class="room-bg" style="background:linear-gradient(135deg,#1a1408,#0d0d04);"></div>
-        <span class="room-badge">Présidentielle</span>
-      </div>
-      <div class="room-card-body">
-        <h3>Suite Présidentielle</h3>
-        <p style="font-size:0.85rem;color:var(--gris-clair);">L'expérience ultime. Deux chambres, salle à manger privée, cuisine équipée et butler 24h/24. Séjour inoubliable.</p>
-        <div class="room-meta"><span>📐 200 m²</span><span>🛏️ 2 Kings</span><span>👥 4 pers.</span><span>👑 Butler 24h</span></div>
-        <div class="room-features">
-          <span class="room-feature-tag">Cuisine équipée</span><span class="room-feature-tag">Salle à manger</span>
-          <span class="room-feature-tag">Butler 24h/24</span><span class="room-feature-tag">Terrasse panoramique</span>
-        </div>
-        <div class="room-price"><span class="amount">€3500</span><span class="per">/ nuit</span></div>
-        <a href="reservation.html" class="btn btn-outline" style="font-size:0.75rem;padding:0.65rem 1.5rem;">Réserver →</a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- INFO RESERVATION -->
-<section class="section-sm" style="background:var(--gris-fonce);text-align:center;">
-  <div class="section-label">Information</div>
-  <h2 class="section-title" style="font-size:2rem;">Politique de Réservation</h2>
-  <div class="divider" style="margin:1.5rem auto;"></div>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:800px;margin:2rem auto 0;">
-    <div><div style="color:var(--gold);font-size:1.5rem;margin-bottom:0.5rem;">✓</div><h4 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:0.3rem;">Annulation Gratuite</h4><p style="font-size:0.82rem;color:var(--gris-clair);">Jusqu'à 48h avant l'arrivée</p></div>
-    <div><div style="color:var(--gold);font-size:1.5rem;margin-bottom:0.5rem;">💳</div><h4 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:0.3rem;">Paiement Sécurisé</h4><p style="font-size:0.82rem;color:var(--gris-clair);">CB, Virement, PayPal acceptés</p></div>
-    <div><div style="color:var(--gold);font-size:1.5rem;margin-bottom:0.5rem;">🏅</div><h4 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:0.3rem;">Meilleur Prix</h4><p style="font-size:0.82rem;color:var(--gris-clair);">Garanti sur notre site officiel</p></div>
-  </div>
-  <a href="reservation.html" class="btn btn-gold" style="margin-top:2.5rem;">Réserver maintenant →</a>
-</section>
-
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand"><h2>Hôtel Lumière</h2><p>15, Avenue des Lumières<br>75008 Paris, France<br><br>+33 1 42 00 00 00</p></div>
-    <div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Accueil</a></li><li><a href="chambres.html">Chambres</a></li><li><a href="services.html">Services</a></li><li><a href="restaurant.html">Restaurant</a></li></ul></div>
-    <div class="footer-col"><h4>Réservation</h4><ul><li><a href="reservation.html">Réserver</a></li><li><a href="offres.html">Offres</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
-    <div class="footer-col"><h4>Légal</h4><ul><li><a href="#">Mentions Légales</a></li><li><a href="#">Confidentialité</a></li><li><a href="#">CGU</a></li></ul></div>
-  </div>
-  <div class="footer-bottom"><span>© 2024 Hôtel Lumière</span><span>Paris, France</span></div>
-</footer>
-
-<script>
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+    // ── Gestion des boutons de filtre ──
+    // Quand on clique sur un bouton, on le met en "actif"
+    // et on retire "actif" des autres boutons
+    document.querySelectorAll('.bouton-filtre').forEach(function(bouton) {
+      bouton.addEventListener('click', function() {
+        // Retirer "actif" de tous les boutons
+        document.querySelectorAll('.bouton-filtre').forEach(function(b) {
+          b.classList.remove('actif');
+        });
+        // Ajouter "actif" au bouton cliqué
+        bouton.classList.add('actif');
+      });
     });
-  });
-</script>
+
+    // ── Menu hamburger (mobile) ──
+    function ouvrirMenu() {
+      var menu = document.querySelector('.liens-nav');
+      if (menu.style.display === 'flex') {
+        menu.style.display = 'none';
+      } else {
+        menu.style.display = 'flex';
+      }
+    }
+
+  </script>
+
 </body>
 </html>
